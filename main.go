@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"strings"
-	"io/ioutil"
 )
 
 type ExecuteSuperBatch struct {
@@ -20,7 +20,7 @@ func (batch ExecuteSuperBatch) execute(filename string) {
 		}
 		fmt.Print(content)
 	} else {
-			fmt.Println(err)
+		fmt.Println(err)
 	}
 }
 
@@ -32,7 +32,7 @@ func performCommand(command string, parameters map[string]string) {
 		if command == "help" {
 			fmt.Print("Help")
 		} else {
-			ExecuteSuperBatch{parameters:parameters}.execute(command)
+			ExecuteSuperBatch{parameters: parameters}.execute(command)
 		}
 	}
 }
