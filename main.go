@@ -4,7 +4,38 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"io/ioutil"
 )
+
+type ExecuteSuperBatch struct {
+	parameters map[string]string
+}
+
+func (batch ExecuteSuperBatch) execute(filename string) {
+	if _, err := os.Stat(filename); err != nil {
+		content, err := ioutil.ReadFile(filename)
+		if err != nil {
+			// log.Fatal(err)
+			fmt.Println(err)
+		}
+		fmt.Print(content)
+	} else {
+			fmt.Println(err)
+	}
+}
+
+func performCommand(command string, parameters map[string]string) {
+	// perform commands from the command line
+	if len(command) == 0 {
+		fmt.Print("HELP")
+	} else {
+		if command == "help" {
+			fmt.Print("Help")
+		} else {
+			ExecuteSuperBatch{parameters:parameters}.execute(command)
+		}
+	}
+}
 
 // The argument parser type used to
 // parse command line arguments
@@ -46,5 +77,5 @@ func main() {
 	var arguments []string = os.Args[1:]
 	var parser = ArgumentParser{arguments: arguments, length: len(arguments)}
 	command, parameters := parser.parse()
-	fmt.Println(command, parameters)
+	performCommand(command, parameters)
 }
